@@ -518,6 +518,7 @@ module Rails
 
     # Define the Rack API for this engine.
     def call(env)
+      # This is where the engine build the request without session (my issue)
       req = build_request env
       app.call req.env
     end

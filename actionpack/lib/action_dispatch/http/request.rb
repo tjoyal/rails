@@ -324,9 +324,13 @@ module ActionDispatch
     # TODO This should be broken apart into AD::Request::Session and probably
     # be included by the session middleware.
     def reset_session
+      # I wonder if we should strip any sessions represented as Hash in Rails and assume it's either nil or a ActionDispatch::Request::Session?
       if session && session.respond_to?(:destroy)
         session.destroy
       else
+        # TODO: Need to be a ActionDispatch::Request::Session? (probably via the current session store)
+        # There does not seems to be a way to get the "current store" at this level?
+        # The current default is very weird to me.
         self.session = {}
       end
     end

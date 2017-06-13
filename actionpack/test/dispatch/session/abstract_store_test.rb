@@ -10,13 +10,15 @@ module ActionDispatch
           super
         end
 
-        def find_session(env, sid)
+        def find_session(req, sid)
           sid ||= 1
-          session = @sessions[sid] ||= {}
+          # Same here
+          # session = @sessions[sid] ||= {}
+          session = @sessions[sid] ||= prepare_session(req)
           [sid, session]
         end
 
-        def write_session(env, sid, session, options)
+        def write_session(req, sid, session, options)
           @sessions[sid] = session
         end
       end

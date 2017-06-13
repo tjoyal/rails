@@ -70,8 +70,10 @@ module ActionDispatch
         Request::Session.create(self, req, @default_options)
       end
 
-      def loaded_session?(session)
-        !session.is_a?(Request::Session) || session.loaded?
+      # NOTE: Why not do this instead?
+      # https://github.com/rack/rack/blob/f2dacc6bb881ed1f588eecf00134abca8e26665e/lib/rack/session/abstract/id.rb#L317-L319
+      def session_class
+        Request::Session
       end
     end
 

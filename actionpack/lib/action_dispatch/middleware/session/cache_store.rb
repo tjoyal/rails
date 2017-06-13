@@ -18,15 +18,27 @@ module ActionDispatch
       end
 
       # Get a session from the cache.
-      def find_session(env, sid)
+      def find_session(req, sid)
         unless sid && (session = @cache.read(cache_key(sid)))
-          sid, session = generate_sid, {}
+          sid = generate_sid
+
+          # Here?
+          # session = {}
+
+          # session = session_class.create(store, req, default_options)
+          # Or even better `prepare_session(req)`
+          # No params to make it happen...
+          # Req param were badly named?
+          session = prepare_session(req)
+
+          # Maybe what we need is for the class that inherit from AbstractStore to define "new_session"
+          # Should "failing to load a session by it's sid" simply raise?
         end
         [sid, session]
       end
 
       # Set a session in the cache.
-      def write_session(env, sid, session, options)
+      def write_session(req, sid, session, options)
         key = cache_key(sid)
         if session
           @cache.write(key, session, expires_in: options[:expire_after])
