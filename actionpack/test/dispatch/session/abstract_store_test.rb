@@ -14,7 +14,7 @@ module ActionDispatch
           sid ||= 1
           # Same here
           # session = @sessions[sid] ||= {}
-          session = @sessions[sid] ||= prepare_session(req)
+          session = @sessions[sid] ||= prepare_default_session(req)
           [sid, session]
         end
 

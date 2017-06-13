@@ -21,6 +21,14 @@ module ActionDispatch
         session
       end
 
+      def self.create_default(store, req, default_options)
+        session     = Request::Session.new(store, req)
+
+        set(req, session)
+        Options.set(req, Request::Session::Options.new(store, default_options))
+        session
+      end
+
       def self.find(req)
         req.get_header ENV_SESSION_KEY
       end

@@ -70,6 +70,10 @@ module ActionDispatch
         Request::Session.create(self, req, @default_options)
       end
 
+      def prepare_default_session(req)
+        Request::Session.create_default(self, req, @default_options)
+      end
+
       # NOTE: Why not do this instead?
       # https://github.com/rack/rack/blob/f2dacc6bb881ed1f588eecf00134abca8e26665e/lib/rack/session/abstract/id.rb#L317-L319
       def session_class
